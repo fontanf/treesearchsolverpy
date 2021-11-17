@@ -75,6 +75,8 @@ class BranchingScheme:
         Attributes
         ----------
 
+        id : int
+            Unique id, given by the BranchingScheme.
         father : Node or None
             father of the nodes, None if it is the root node.
         visited : int
@@ -97,6 +99,7 @@ class BranchingScheme:
 
         """
 
+        id = None
         father = None
         visited = None
         number_of_locations = None
@@ -106,10 +109,13 @@ class BranchingScheme:
         next_child_pos = 0
 
         def __lt__(self, other):
+            if self.guide == other.guide:
+                return self.id < other.id
             return self.guide < other.guide
 
     def __init__(self, instance):
         self.instance = instance
+        self.id = 1
 
     def root(self):
         # The root node contains only location 0.
@@ -120,6 +126,8 @@ class BranchingScheme:
         node.j = 0
         node.length = 0
         node.guide = 0
+        node.id = self.id
+        self.id += 1
         return node
 
     def next_child(self, father):
@@ -138,6 +146,8 @@ class BranchingScheme:
         child.j = j_next
         child.length = father.length + self.instance.distance(father.j, j_next)
         child.guide = child.length
+        child.id = self.id
+        self.id += 1
         return child
 
     def infertile(self, node):

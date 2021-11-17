@@ -89,7 +89,7 @@ def add_to_history_and_queue(branching_scheme, history, queue, node):
         while index < len(list_of_nodes):
             n = list_of_nodes[index]
             if branching_scheme.dominates(node, n):
-                queue.discard(n)
+                queue.remove(n)
                 list_of_nodes[index] = list_of_nodes[-1]
                 list_of_nodes.pop()
             else:
@@ -111,7 +111,7 @@ def remove_from_history(branching_scheme, history, node):
         index = 0
         while index < len(list_of_nodes):
             node_2 = list_of_nodes[index]
-            if node_2 == node:
+            if node_2 is node:
                 list_of_nodes[index] = list_of_nodes[-1]
                 list_of_nodes.pop()
                 if not list_of_nodes:
