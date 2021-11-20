@@ -109,13 +109,13 @@ class BranchingScheme:
         next_child_pos = 0
 
         def __lt__(self, other):
-            if self.guide == other.guide:
-                return self.id < other.id
-            return self.guide < other.guide
+            if self.guide != other.guide:
+                return self.guide < other.guide
+            return self.id < other.id
 
     def __init__(self, instance):
         self.instance = instance
-        self.id = 1
+        self.id = 0
 
     def root(self):
         # The root node contains only location 0.
@@ -161,7 +161,7 @@ class BranchingScheme:
         if node_2.number_of_locations < len(self.instance.locations):
             return False
         d2 = node_2.length + self.instance.distance(node_2.j, 0)
-        return node_2.length >= d2
+        return node_1.length >= d2
 
     # Solution pool.
 
@@ -259,19 +259,27 @@ if __name__ == "__main__":
             instance.write(
                     args.instance + "_" + str(number_of_locations) + ".json")
 
-    elif args.algorithm == "iterative_beam_search":
+    elif args.algorithm == "checker":
+        instance = Instance(args.instance)
+        instance.check(args.certificate)
+
+    else:
         instance = Instance(args.instance)
         branching_scheme = BranchingScheme(instance)
-        output = treesearchsolverpy.iterative_beam_search(
-                branching_scheme,
-                time_limit=30)
+        if args.algorithm == "greedy":
+            output = treesearchsolverpy.greedy(
+                    branching_scheme)
+        elif args.algorithm == "best_first_search":
+            output = treesearchsolverpy.best_first_search(
+                    branching_scheme,
+                    time_limit=30)
+        elif args.algorithm == "iterative_beam_search":
+            output = treesearchsolverpy.iterative_beam_search(
+                    branching_scheme,
+                    time_limit=30)
         solution = branching_scheme.to_solution(output["solution_pool"].best)
         if args.certificate is not None:
             data = {"locations": solution}
             with open(args.certificate, 'w') as json_file:
                 json.dump(data, json_file)
             instance.check(args.certificate)
-
-    elif args.algorithm == "checker":
-        instance = Instance(args.instance)
-        instance.check(args.certificate)

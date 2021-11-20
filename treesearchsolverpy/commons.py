@@ -47,28 +47,34 @@ class SolutionPool:
 
     def display_init(self, verbose):
         if verbose:
-            print("-"*79)
+            print()
             print(
-                    '{:16}'.format("Time")
-                    + '{:40}'.format("Value")
-                    + '{:32}'.format("Comment"))
-            print("-"*79)
+                    '{:>11}'.format("Time")
+                    + '{:>32}'.format("Value")
+                    + '{:>32}'.format("Comment"))
+            print(
+                    '{:>11}'.format("----")
+                    + '{:>32}'.format("-----")
+                    + '{:>32}'.format("-------"))
 
     def display(self, message, start, verbose):
         if verbose:
             value = self.branching_scheme.display(self.best)
             print(
-                    '{:<16.3f}'.format(time.time() - start)
-                    + '{:40}'.format(value)
-                    + '{:32}'.format(message))
+                    '{:>11.3f}'.format(time.time() - start)
+                    + '{:>32}'.format(value)
+                    + '{:>32}'.format(message))
 
     def display_end(self, start, verbose):
         if verbose:
             current_time = time.time() - start
             value = self.branching_scheme.display(self.solutions[0])
-            print("---")
-            print(f"Time: {current_time}")
-            print(f"Value: {value}")
+            # print("-"*75)
+            print()
+            print("Final statistics")
+            print("----------------")
+            print(f"Value:                       {value}")
+            print("Time:" + " " * 24 + '{:<11.3f}'.format(current_time))
 
 
 def add_to_history_and_queue(branching_scheme, history, queue, node):

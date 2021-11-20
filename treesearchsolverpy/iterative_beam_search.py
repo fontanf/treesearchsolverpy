@@ -9,7 +9,7 @@ def iterative_beam_search(branching_scheme, **parameters):
     # Read parameters.
     start = time.time()
     maximum_pool_size = parameters.get(
-            "maximum_pool_size", 0)
+            "maximum_pool_size", 1)
     minimum_size_of_the_queue = parameters.get(
             "minimum_size_of_the_queue", 1)
     maximum_size_of_the_queue = parameters.get(
@@ -22,6 +22,24 @@ def iterative_beam_search(branching_scheme, **parameters):
             "time_limit", float('inf'))
     verbose = parameters.get(
             "verbose", True)
+
+    if verbose:
+        print("======================================")
+        print("          Tree Search Solver          ")
+        print("======================================")
+        print()
+        print("Algorithm")
+        print("---------")
+        print("Iterative Beam Search")
+        print()
+        print("Parameters")
+        print("----------")
+        print(f"Minimum size of the queue:  {minimum_size_of_the_queue}")
+        print(f"Maximum size of the queue:  {maximum_size_of_the_queue}")
+        print(f"Maximum number of nodes:    {maximum_number_of_nodes}")
+        print(f"Growth factor:              {growth_factor}")
+        print(f"Maximum pool size:          {maximum_pool_size}")
+        print(f"Time limit:                 {time_limit}")
 
     # Setup structures.
     solution_pool = ts.SolutionPool(branching_scheme, maximum_pool_size)
@@ -53,8 +71,6 @@ def iterative_beam_search(branching_scheme, **parameters):
 
             current_node = None
             while current_node is not None or q:
-                number_of_nodes += 1
-
                 # Check time limit.
                 current_time = time.time()
                 if current_time - start > time_limit:
@@ -65,6 +81,8 @@ def iterative_beam_search(branching_scheme, **parameters):
                 if number_of_nodes > maximum_number_of_nodes:
                     end = True
                     break
+
+                number_of_nodes += 1
 
                 # Get the next processed node from the queue.
                 if current_node is None:
@@ -127,6 +145,9 @@ def iterative_beam_search(branching_scheme, **parameters):
 
     # Final display.
     solution_pool.display_end(start, verbose)
+    if verbose:
+        print(f"Number of nodes:             {number_of_nodes}")
+        print(f"Maximum size of the queue:   {queue_size}")
 
     end = time.time()
 
