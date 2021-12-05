@@ -48,23 +48,22 @@ def greedy(branching_scheme, **parameters):
         number_of_nodes += 1
 
         # Generate children.
-        children = []
+        best_child = None
         while not branching_scheme.infertile(current_node):
+            if best_child is not None \
+                    and best_child < current_node:
+                break
             child = branching_scheme.next_child(current_node)
             if child is None:
                 continue
-            children.append(child)
             # Update best solution.
             if branching_scheme.better(child, solution_pool.worst):
                 solution_pool.add(child)
-
-        random.shuffle(children)
-
-        # Find best child.
-        best_child = None
-        for child in children:
+            if branching_scheme.leaf(child):
+                continue
             if best_child is None or best_child > child:
                 best_child = child
+
         # Stop criteria.
         if best_child is None:
             break
