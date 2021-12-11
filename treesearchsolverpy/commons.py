@@ -68,7 +68,7 @@ class SolutionPool:
     def display_end(self, start, verbose):
         if verbose:
             current_time = time.time() - start
-            value = self.branching_scheme.display(self.solutions[0])
+            value = self.branching_scheme.display(self.best)
             # print("-"*75)
             print()
             print("Final statistics")

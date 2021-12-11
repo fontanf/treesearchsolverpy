@@ -1,4 +1,6 @@
-import treesearchsolverpy.commons as ts
+from .commons import SolutionPool, \
+                     add_to_history_and_queue, \
+                     remove_from_history_and_queue
 
 import time
 from sortedcontainers import SortedList
@@ -34,7 +36,7 @@ def best_first_search(branching_scheme, **parameters):
         print(f"Time limit:                 {time_limit}")
 
     # Setup structures.
-    solution_pool = ts.SolutionPool(branching_scheme, maximum_pool_size)
+    solution_pool = SolutionPool(branching_scheme, maximum_pool_size)
     queue = SortedList()
     history = {}
     number_of_nodes = 0
@@ -44,7 +46,7 @@ def best_first_search(branching_scheme, **parameters):
 
     # Initialize queue with root node.
     root = branching_scheme.root()
-    ts.add_to_history_and_queue(branching_scheme, history, queue, root)
+    add_to_history_and_queue(branching_scheme, history, queue, root)
     current_node = None
 
     while current_node is not None or queue:
@@ -65,7 +67,7 @@ def best_first_search(branching_scheme, **parameters):
         # Get the next processed node from the queue.
         if current_node is None:
             current_node = queue[0]
-            ts.remove_from_history_and_queue(
+            remove_from_history_and_queue(
                     branching_scheme, history, queue, 0)
             # Check bound.
             if branching_scheme.bound(
@@ -95,14 +97,14 @@ def best_first_search(branching_scheme, **parameters):
                     and not branching_scheme.bound(
                         child, solution_pool.worst)):
                 # Add child to the queue (and the history).
-                ts.add_to_history_and_queue(
+                add_to_history_and_queue(
                         branching_scheme, history, queue, child)
 
         # If current_node still has children, put it back to the queue.
         if branching_scheme.infertile(current_node):
             current_node = None
         elif len(queue) > 0 and queue[0] < current_node:
-            ts.add_to_history_and_queue(
+            add_to_history_and_queue(
                     branching_scheme, history, queue, current_node)
             current_node = None
 

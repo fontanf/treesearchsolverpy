@@ -1,4 +1,6 @@
-import treesearchsolverpy.commons as ts
+from .commons import SolutionPool, \
+                     add_to_history_and_queue, \
+                     remove_from_history_and_queue
 
 import math
 import time
@@ -42,7 +44,7 @@ def iterative_beam_search(branching_scheme, **parameters):
         print(f"Time limit:                 {time_limit}")
 
     # Setup structures.
-    solution_pool = ts.SolutionPool(branching_scheme, maximum_pool_size)
+    solution_pool = SolutionPool(branching_scheme, maximum_pool_size)
     q = SortedList()
     q_next = SortedList()
     history = {}
@@ -117,12 +119,12 @@ def iterative_beam_search(branching_scheme, **parameters):
                         # queue.
                         if len(q_next) < queue_size or child < q_next[-1]:
                             # Add child to the queue (and the history).
-                            ts.add_to_history_and_queue(
+                            add_to_history_and_queue(
                                     branching_scheme, history, q_next, child)
                             # If the beam is too large, remove the less
                             # interesting nodes.
                             if len(q_next) > queue_size:
-                                ts.remove_from_history_and_queue(
+                                remove_from_history_and_queue(
                                         branching_scheme,
                                         history,
                                         q_next,

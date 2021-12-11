@@ -1,4 +1,4 @@
-import treesearchsolverpy.commons as ts
+from .commons import SolutionPool
 
 import time
 import random
@@ -33,7 +33,7 @@ def greedy(branching_scheme, **parameters):
 
     random.seed(seed)
 
-    solution_pool = ts.SolutionPool(branching_scheme, maximum_pool_size)
+    solution_pool = SolutionPool(branching_scheme, maximum_pool_size)
     number_of_nodes = 0
 
     current_node = branching_scheme.root()
