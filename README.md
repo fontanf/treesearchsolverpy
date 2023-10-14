@@ -1,4 +1,4 @@
-# Tree Search Solver (Python)
+# Tree search Solver (Python)
 
 A solver based on heuristic tree search.
 
@@ -21,7 +21,7 @@ Algorithms:
 
 ## Examples
 
-[Travelling Salesman Problem](examples/travellingsalesman.py)
+[Travelling salesman problem](examples/travellingsalesman.py)
 
 ## Usage, running examples from command line
 
