@@ -18,7 +18,7 @@ def greedy(branching_scheme, **parameters):
 
     if verbose:
         print("======================================")
-        print("          Tree Search Solver          ")
+        print("           TreeSearchSolver           ")
         print("======================================")
         print()
         print("Algorithm")

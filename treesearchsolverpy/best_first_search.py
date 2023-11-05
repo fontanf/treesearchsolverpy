@@ -22,12 +22,12 @@ def best_first_search(branching_scheme, **parameters):
 
     if verbose:
         print("======================================")
-        print("          Tree Search Solver          ")
+        print("           TreeSearchSolver           ")
         print("======================================")
         print()
         print("Algorithm")
         print("---------")
-        print("Best First Search")
+        print("Best first search")
         print()
         print("Parameters")
         print("----------")

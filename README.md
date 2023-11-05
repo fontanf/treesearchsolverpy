@@ -1,4 +1,4 @@
-# Tree search Solver (Python)
+# TreeSearchSolver (Python)
 
 A solver based on heuristic tree search.
 

@@ -27,12 +27,12 @@ def iterative_beam_search(branching_scheme, **parameters):
 
     if verbose:
         print("======================================")
-        print("          Tree Search Solver          ")
+        print("           TreeSearchSolver           ")
         print("======================================")
         print()
         print("Algorithm")
         print("---------")
-        print("Iterative Beam Search")
+        print("Iterative beam search")
         print()
         print("Parameters")
         print("----------")
